@@ -2,6 +2,7 @@ import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 /**
  * Base
@@ -19,13 +20,147 @@ const scene = new THREE.Scene();
  * Fog
  */
 const fog = new THREE.Fog("#262837", 1, 15);
-scene.fog = fog;
+// scene.fog = fog;
 
 /**
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+const gltfLoader = new GLTFLoader();
 
+/**
+ * Load Gltf Loader
+ */
+
+gltfLoader.load("gltf/hunt_park_large_tree/scene.gltf", (gltf) => {
+  console.log(gltf);
+  gltf.scene.scale.set(0.3, 0.3, 0.3);
+  gltf.scene.position.set(2, -1, -1);
+
+  scene.add(gltf.scene);
+});
+
+gltfLoader.load("gltf/japanese_tori_gate/scene.gltf", (gltf) => {
+  console.log(gltf);
+  gltf.scene.scale.set(0.3, 0.4, 0.3);
+  gltf.scene.position.set(0, 3.4, 9.6);
+  gui.add(gltf.scene.position, "x").min(1).max(10).step(0.1).name("gateX");
+  gui.add(gltf.scene.position, "y").min(1).max(10).step(0.1).name("gateY");
+  gui.add(gltf.scene.position, "z").min(1).max(10).step(0.1).name("gateZ");
+  gui.add(gltf.scene.scale, "x").min(1).max(10).step(0.1).name("gateScaleX");
+  gui
+    .add(gltf.scene.scale, "y")
+    .min(0.01)
+    .max(0.4)
+    .step(0.01)
+    .name("gateScaleY");
+  gui.add(gltf.scene.scale, "z").min(1).max(10).step(0.1).name("gateScaleZ");
+
+  scene.add(gltf.scene);
+});
+
+gltfLoader.load("gltf/wooden_fence/scene.gltf", (gltf) => {
+  console.log(gltf);
+  gltf.scene.scale.set(0.15, 0.1, 0.21);
+  gltf.scene.position.set(5.9, -0.1, 9.6);
+  gltf.scene.rotation.set(0, -1.57, 0);
+
+  gui
+    .add(gltf.scene.position, "x")
+    .min(-5)
+    .max(10)
+    .step(0.1)
+    .name("FancesPostionX");
+  gui
+    .add(gltf.scene.position, "y")
+    .min(-5)
+    .max(10)
+    .step(0.1)
+    .name("FancesPostionY");
+  gui
+    .add(gltf.scene.position, "z")
+    .min(-5)
+    .max(10)
+    .step(0.1)
+    .name("FancesPostionZ");
+
+  gui
+    .add(gltf.scene.scale, "x")
+    .min(0.01)
+    .max(0.4)
+    .step(0.01)
+    .name("FancesScaleX");
+  gui
+    .add(gltf.scene.scale, "y")
+    .min(0.01)
+    .max(0.4)
+    .step(0.01)
+    .name("FancesScaleY");
+  gui
+    .add(gltf.scene.scale, "z")
+    .min(0.01)
+    .max(0.4)
+    .step(0.01)
+    .name("FancesScaleZ");
+
+  gui
+    .add(gltf.scene.rotation, "y")
+    .min(-Math.PI)
+    .max(Math.PI)
+    .step(0.01)
+    .name("FancesRotationY");
+
+  scene.add(gltf.scene);
+});
+
+gltfLoader.load("gltf/wooden_fence/scene.gltf", (gltf) => {
+  gltf.scene.scale.set(0.15, 0.1, 0.21);
+  gltf.scene.position.set(-5.9, -0.1, 9.6);
+  gltf.scene.rotation.set(0, -1.57, 0);
+
+  scene.add(gltf.scene);
+});
+
+gltfLoader.load("gltf/wooden_fence/scene.gltf", (gltf) => {
+  gltf.scene.scale.set(0.15, 0.1, 0.21);
+  gltf.scene.position.set(-10, -0.1, 5.4);
+  gltf.scene.rotation.set(0, Math.PI, 0);
+
+  scene.add(gltf.scene);
+
+  gui
+    .add(gltf.scene.position, "x")
+    .min(-15)
+    .max(10)
+    .step(0.1)
+    .name("FancesSidePostionX");
+  gui
+    .add(gltf.scene.position, "z")
+    .min(-15)
+    .max(10)
+    .step(0.1)
+    .name("FancesSidePostionZ");
+  gui
+    .add(gltf.scene.rotation, "y")
+    .min(-Math.PI)
+    .max(Math.PI)
+    .step(0.01)
+    .name("FancesSideRotaiony");
+  gui
+    .add(gltf.scene.scale, "z")
+    .min(-15)
+    .max(10)
+    .step(0.01)
+    .name("FancesSideScaleZ");
+});
+
+gltfLoader.load("gltf/wooden_fence/scene.gltf", (gltf) => {
+  gltf.scene.scale.set(0.15, 0.1, 0.21);
+  gltf.scene.position.set(10, -0.1, 5.4);
+  gltf.scene.rotation.set(0, 0, 0);
+
+  scene.add(gltf.scene);
+});
 /**
  * House
  */

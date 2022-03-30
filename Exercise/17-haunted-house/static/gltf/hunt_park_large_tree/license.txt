@@ -1,0 +1,11 @@
+Model Information:
+* title:	Hunt Park Large Tree
+* source:	https://sketchfab.com/3d-models/hunt-park-large-tree-b3cc8f7f3cd0495ea3a8ddfae3902921
+* author:	symension123 (https://sketchfab.com/symension123)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Hunt Park Large Tree" (https://sketchfab.com/3d-models/hunt-park-large-tree-b3cc8f7f3cd0495ea3a8ddfae3902921) by symension123 (https://sketchfab.com/symension123) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
