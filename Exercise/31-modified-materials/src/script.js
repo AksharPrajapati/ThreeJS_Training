@@ -72,8 +72,71 @@ const material = new THREE.MeshStandardMaterial({
   normalMap: normalTexture,
 });
 
+const depthMaterial = new THREE.MeshDepthMaterial({
+  depthPacking: THREE.RGBADepthPacking,
+});
+
+const customUniforms = {
+  uTime: { value: 0 },
+};
+
 material.onBeforeCompile = (shaders) => {
-  console.log(shaders);
+  shaders.uniforms.uTime = customUniforms.uTime;
+  shaders.vertexShader = shaders.vertexShader.replace(
+    "#include <common>",
+    `
+    #include <common>
+
+    uniform float uTime;
+
+    mat2 rotate2d(float _angle){
+        return mat2(cos(_angle),-sin(_angle),
+                    sin(_angle),cos(_angle));
+    }
+     `
+  );
+
+  shaders.vertexShader = shaders.vertexShader.replace(
+    "#include <beginnormal_vertex>",
+    `
+     #include <beginnormal_vertex>
+     float angle = (position.y + uTime) * 0.2;
+     mat2 rotateMatrix = rotate2d(angle);
+     objectNormal.xz = rotateMatrix * objectNormal.xz;
+    `
+  );
+
+  shaders.vertexShader = shaders.vertexShader.replace(
+    "#include <begin_vertex>",
+    `
+     #include <begin_vertex>
+     transformed.xz = rotateMatrix * transformed.xz;
+    `
+  );
+};
+
+depthMaterial.onBeforeCompile = (shaders) => {
+  shaders.uniforms.uTime = customUniforms.uTime;
+  shaders.vertexShader = shaders.vertexShader.replace(
+    "#include <common>",
+    `
+      #include <common>
+  
+      uniform float uTime;
+  
+      mat2 rotate2d(float _angle){
+          return mat2(cos(_angle),-sin(_angle),
+                      sin(_angle),cos(_angle));
+      }
+       `
+  );
+  shaders.vertexShader = shaders.vertexShader.replace(
+    "#include <begin_vertex>",
+    `
+       #include <begin_vertex>
+       transformed.xz = rotateMatrix * transformed.xz;
+      `
+  );
 };
 
 /**
@@ -84,6 +147,7 @@ gltfLoader.load("/models/LeePerrySmith/LeePerrySmith.glb", (gltf) => {
   const mesh = gltf.scene.children[0];
   mesh.rotation.y = Math.PI * 0.5;
   mesh.material = material;
+  mesh.customDepthMaterial = depthMaterial;
   scene.add(mesh);
 
   // Update materials
@@ -163,7 +227,7 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
-
+  customUniforms.uTime.value = elapsedTime;
   // Update controls
   controls.update();
 
